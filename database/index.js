@@ -10,4 +10,4 @@ connection.once('open', () => {
 	console.log('successful connection to mongodb!');
 });
 
-// module.exports = connection
+module.exports = connection
