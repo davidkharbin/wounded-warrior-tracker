@@ -5,25 +5,23 @@ const db = require('../database/index.js')
 const cors = require('cors');
  
 // serve static files from dist dir
-app.use(express.static(__dirname + '/../dist'));
- 
+app.use(express.static('client/dist'));
+
 // middleware
 // use express.json for parsing JSON
 app.use(express.json());
 // use cors middleware for enabling CORS with various options
 app.use(cors());
  
-// get entries
-app.get('/entries', (req, res) => {
- queries.getEntry(req.query.name, (err, entry) => {
-   if (err) {
-     res.status(404).send(err);
-   } else {
-     res.status(200).send(entry);
-   }
- })
+app.use(express.urlencoded({ extended: true }));
+// get index.html 
+app.get('/', (req, res) => {
+  res.sendFile('index.html', { root: __dirname + '/../client/dist' }, (err) => {
+    if (err) {
+      res.status(400).send(err);
+    }
+  });
 });
- 
 // set port where server will listen
 const port = 3001;
  
