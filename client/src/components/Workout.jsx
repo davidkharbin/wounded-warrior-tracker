@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Workouts = ({workout}) => {
+const Workout = ({workout}) => {
 	let date = workout.date;
 	let name = workout.name;
 	let pushUps = 0;
@@ -24,4 +24,4 @@ const Workouts = ({workout}) => {
 	)
 }
 
-export default Workouts
+export default Workout

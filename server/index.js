@@ -17,57 +17,60 @@ app.listen(port, () => {
   console.log(`Express server listening on port: ${port}`);
 });
 
+const main = () => {
+  let totals = {
+    pushUps: 1000,
+    pullUps: 1000,
+    sitUps: 1000,
+    burpees: 1000
+  }
+  let workouts = [];
 
+  (async function getData() {
+    // Create a new Garmin Connect Client
+    let GCClient = new GarminConnect();
+    // Uses credentials from garmin.config.json
+    await GCClient.login(creds.username, creds.password);
+    //get last 30 activities
+    let activityList = await GCClient.getActivities(0, 30);
+    // filter Wounded-Warrior activities 
+    // **** refactor using arr.proto.filter ****
+    activityList.forEach(activity => {
+      if (activity.activityName.includes('Wounded')) {
+        let name = activity.activityName;
+        let date = activity.startTimeLocal.substring(0, 10)
+        let id = activity.activityId;
+        let summary = activity.summarizedExerciseSets;
+        workouts.push({ name: name, id: id, summary: summary, date: date })
+      }
+    });
 
-let totals = {
-  pushUps: 1000,
-  pullUps: 1000,
-  sitUps: 1000,
-  burpees: 1000
-}
-let workouts = [];
-// Has to be run in an async function to be able to use the await keyword,
-(async function main(){
-
-  // Create a new Garmin Connect Client
-  let GCClient = new GarminConnect();
-  // Uses credentials from garmin.config.json
-  await GCClient.login(creds.username, creds.password);
-
-  //get last 30 activities
-  let activityList = await GCClient.getActivities(0, 30);
-
-  // aggregate relevant activities 
-  activityList.forEach(activity => {
-    if (activity.activityName.includes('Wounded')) {
-      let name = activity.activityName;
-      let date = activity.startTimeLocal.substring(0, 10)
-      let id = activity.activityId;
-      let summary = activity.summarizedExerciseSets;
-      workouts.push({ name: name, id: id, summary: summary, date: date })
-    }
-  });
-
-  workouts.forEach(workout => {
-    let summaries = workout.summary;
-    summaries.forEach(summary => {
-      if (summary.subCategory === 'BURPEE') totals.burpees -= summary.reps;
-      if (summary.category === 'PULL_UP') totals.pullUps -= summary.reps;
-      if (summary.category === 'PUSH_UP') totals.pushUps -= summary.reps;
-      if (summary.category === 'SIT_UP') totals.sitUps -= summary.reps;
+    // total the remaining reps for each exercise
+    workouts.forEach(workout => {
+      let summaries = workout.summary;
+      summaries.forEach(summary => {
+        if (summary.subCategory === 'BURPEE') totals.burpees -= summary.reps;
+        if (summary.category === 'PULL_UP') totals.pullUps -= summary.reps;
+        if (summary.category === 'PUSH_UP') totals.pushUps -= summary.reps;
+        if (summary.category === 'SIT_UP') totals.sitUps -= summary.reps;
+      })
     })
-  })
-  console.log('=========TOTAL TO DATE SET========');
-  console.log('pushUps :>> ', totals.pushUps);
-  console.log('pullUps :>> ', totals.pullUps);
-  console.log('sitUps :>> ', totals.sitUps);
-  console.log('burpees :>> ', totals.burpees);
-})();
+    console.log('=========TOTALS TO DATE  HAVE BEEN SET========');
+    console.log('pushUps :>> ', totals.pushUps);
+    console.log('pullUps :>> ', totals.pullUps);
+    console.log('sitUps  :>>  ', totals.sitUps);
+    console.log('burpees :>> ', totals.burpees);
+  })();
+
+  return [totals, workouts];
+};
+
+let myValues = main();
 
 app.get('/totals', (req, res) => {
   console.log('ran totals');
-  res.send([totals, workouts])
-})
+  res.send(myValues);
+});
 
 app.get('/', (req, res) => {
   res.sendFile('index.html', { root: __dirname + '/../client/dist' }, (err) => {

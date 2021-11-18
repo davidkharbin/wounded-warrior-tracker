@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Workouts from './Workouts.jsx';
+import Workout from './Workout.jsx';
 import axios from 'axios'
 
 const App = () => {
@@ -29,7 +29,7 @@ const App = () => {
 				<li>Push-Ups: {totals.pushUps}</li>
 				<li>Sit-Ups: {totals.sitUps}</li>
 			</ul>
-			{workouts.map((workout) => <Workouts workout={workout} key={workout.id}/>)}
+			{workouts.map((workout) => <Workout workout={workout} key={workout.id}/>)}
 		</div>
 	)
 }

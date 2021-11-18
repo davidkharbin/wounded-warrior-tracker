@@ -1,5 +1,4 @@
 const path = require('path');
-const NodePolyfillPlugin = require("node-polyfill-webpack-plugin")
 
 module.exports = {
   // set mode to dev to set process.env.NODE_ENV on DefinePlugin to value development
@@ -13,9 +12,6 @@ module.exports = {
     filename: 'bundle.js'
   },
 
-  plugins: [
-    new NodePolyfillPlugin()
-  ],
   module: {
     rules: [
       {

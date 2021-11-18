@@ -23,7 +23,7 @@ app.listen(port, () => {
  * garmin's sso lockout period is 24 hours! :(
  * 
  * otherwise, totals and workouts objects were set outside the scope of main() below
- * and main() should be ran async as an iife, so the scraper can go get the workout data
+ * and main() should be ran async as an iiafe, so the scraper can go get the workout data
  * then, instead of main() returning [totals, workouts], it just runs
  * then, the /totals route will res.send([totals, workouts]) instead of running main()
  */
