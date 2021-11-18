@@ -1,10 +1,11 @@
 const express = require('express');
 const app = express();
-const queries = require('../database/schema.js');
-const db = require('../database/index.js')
+// const queries = require('../database/schema.js');
+// const db = require('../database/index.js')
 const cors = require('cors');
-const creds = require('../garmin.config.json')
-const { GarminConnect } = require('garmin-connect');
+// const creds = require('../garmin.config.json')
+// const { GarminConnect } = require('garmin-connect');
+const Activities = require('../database/activities')
 const port = 3001;
 
 // serve static files from dist dir
@@ -17,25 +18,37 @@ app.listen(port, () => {
   console.log(`Express server listening on port: ${port}`);
 });
 
+/**
+ * temporarily setup local data (activities.json) to avoid lockout
+ * garmin's sso lockout period is 24 hours! :(
+ * 
+ * otherwise, totals and workouts objects were set outside the scope of main() below
+ * and main() should be ran async as an iife, so the scraper can go get the workout data
+ * then, instead of main() returning [totals, workouts], it just runs
+ * then, the /totals route will res.send([totals, workouts]) instead of running main()
+ */
 
 
-let totals = {
-  pushUps: 1000,
-  pullUps: 1000,
-  sitUps: 1000,
-  burpees: 1000
-}
-let workouts = [];
+
 // Has to be run in an async function to be able to use the await keyword,
-(async function main(){
-
+const main = () => {
+  let totals = {
+    pushUps: 1000,
+    pullUps: 1000,
+    sitUps: 1000,
+    burpees: 1000
+  }
+  let workouts = [];
   // Create a new Garmin Connect Client
-  let GCClient = new GarminConnect();
+  // let GCClient = new GarminConnect();
   // Uses credentials from garmin.config.json
-  await GCClient.login(creds.username, creds.password);
+  // await GCClient.login(creds.username, creds.password);
 
   //get last 30 activities
-  let activityList = await GCClient.getActivities(0, 30);
+  // let activityList = await GCClient.getActivities(0, 30);
+
+  // test with local data to avoid lockout
+  let activityList = Activities;
 
   // aggregate relevant activities 
   activityList.forEach(activity => {
@@ -62,11 +75,13 @@ let workouts = [];
   console.log('pullUps :>> ', totals.pullUps);
   console.log('sitUps :>> ', totals.sitUps);
   console.log('burpees :>> ', totals.burpees);
-})();
+  return [totals, workouts]
+};
 
 app.get('/totals', (req, res) => {
   console.log('ran totals');
-  res.send([totals, workouts])
+  console.log('main>>>', main())
+  res.send(main())
 })
 
 app.get('/', (req, res) => {

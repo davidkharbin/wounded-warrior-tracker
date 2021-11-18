@@ -10,7 +10,7 @@ const Workouts = ({workout}) => {
 
 	for (let i = 0; i < workout.summary.length; i++){
 		let currentCategory = workout.summary[i].category;
-		console.log(currentCategory, currentCategory.reps);
+		
 		if (currentCategory === 'TOTAL_BODY') burpees += workout.summary[i].reps|| 0;
 		if (currentCategory === 'PUSH_UP')    pushUps += workout.summary[i].reps|| 0;
 		if (currentCategory === 'SIT_UP')     pullUps += workout.summary[i].reps|| 0;
