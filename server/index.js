@@ -19,43 +19,42 @@ app.listen(port, () => {
 
 
 
-// Has to be run in an async function to be able to use the await keyword
-const main = async () => {
-  const totals = {
-    pushUps: 0,
-    pullUps: 0,
-    sitUps: 0,
-    burpees: 0
-  }
-  const workouts = [];
+let totals = {
+  pushUps: 1000,
+  pullUps: 1000,
+  sitUps: 1000,
+  burpees: 1000
+}
+let workouts = [];
+// Has to be run in an async function to be able to use the await keyword,
+(async function main(){
 
   // Create a new Garmin Connect Client
-  const GCClient = new GarminConnect();
+  let GCClient = new GarminConnect();
   // Uses credentials from garmin.config.json
   await GCClient.login(creds.username, creds.password);
 
   //get last 30 activities
-  const activityList = await GCClient.getActivities(0, 30);
-  const lastActivity = await GCClient.getActivities(0, 1);
+  let activityList = await GCClient.getActivities(0, 30);
 
   // aggregate relevant activities 
   activityList.forEach(activity => {
     if (activity.activityName.includes('Wounded')) {
-      const name = activity.activityName;
-      const date = activity.startTimeLocal.substring(0, 10)
-      const id = activity.activityId;
-      const summary = activity.summarizedExerciseSets;
+      let name = activity.activityName;
+      let date = activity.startTimeLocal.substring(0, 10)
+      let id = activity.activityId;
+      let summary = activity.summarizedExerciseSets;
       workouts.push({ name: name, id: id, summary: summary, date: date })
     }
   });
 
   workouts.forEach(workout => {
-    const summaries = workout.summary;
+    let summaries = workout.summary;
     summaries.forEach(summary => {
-      if (summary.category === 'PULL_UP') totals.pullUps += summary.reps;
-      if (summary.category === 'PUSH_UP') totals.pushUps += summary.reps;
-      if (summary.category === 'SIT_UP') totals.sitUps += summary.reps;
-      if (summary.subCategory === 'BURPEE') totals.burpees += summary.reps;
+      if (summary.category === 'PULL_UP') totals.pullUps -= summary.reps;
+      if (summary.category === 'PUSH_UP') totals.pushUps -= summary.reps;
+      if (summary.category === 'SIT_UP') totals.sitUps -= summary.reps;
+      if (summary.subCategory === 'BURPEE') totals.burpees -= summary.reps;
     })
   })
   console.log('=========TOTAL TO DATE========');
@@ -63,12 +62,11 @@ const main = async () => {
   console.log('pullUps :>> ', totals.pullUps);
   console.log('sitUps :>> ', totals.sitUps);
   console.log('burpees :>> ', totals.burpees);
-  return totals;
-};
+})();
 
 app.get('/totals', (req, res) => {
   console.log('ran totals');
-  res.send(main())
+  res.send([totals, workouts.reverse()])
 })
 
 app.get('/', (req, res) => {
