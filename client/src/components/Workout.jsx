@@ -19,7 +19,7 @@ const Workout = ({workout}) => {
 
 	return (
 		<div>
-			{`${date} | ${name} | Push-Ups: ${pushUps} | Pull-Ups: ${pullUps} | Sit-Ups: ${sitUps} | Burpees: ${burpees}`}
+			{`${date} | ${name} | Burpees: ${burpees} | Pull-Ups: ${pullUps} | Push-Ups: ${pushUps} | Sit-Ups: ${sitUps} `}
 		</div>
 	)
 }

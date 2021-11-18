@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Workout from './Workout.jsx';
 import axios from 'axios'
+import '../styles/App.css'
 
 const App = () => {
 	const [totals, setTotals] = useState('');
@@ -21,7 +22,7 @@ const App = () => {
 	}, []);
 
 	return (
-		<div>
+		<div className="App">
 			<h1>Wounded Warrior Challenge 2021</h1>
 			<ul>Remaining reps...
 				<li>Burpees: {totals.burpees}</li>
