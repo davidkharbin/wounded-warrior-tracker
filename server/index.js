@@ -1,12 +1,12 @@
 const express = require('express');
 const app = express();
 const cron = require('node-cron');
-const queries = require('../database/schema.js');
-const db = require('../database/index.js')
+// const queries = require('../database/schema.js');
+// const db = require('../database/index.js')
 const cors = require('cors');
 const creds = require('../garmin.config.json')
 const { GarminConnect } = require('garmin-connect');
-const port = 3001;
+const port = process.env.PORT || 3001;
 
 // serve static files from dist dir
 app.use(express.static('client/dist'));
@@ -32,8 +32,8 @@ const main = () => {
     let GCClient = new GarminConnect();
     // Uses credentials from garmin.config.json
     await GCClient.login(creds.username, creds.password);
-    //get last 30 activities
-    let activityList = await GCClient.getActivities(0, 30);
+    //get last 50 activities
+    let activityList = await GCClient.getActivities(0, 50);
     // filter Wounded-Warrior activities 
     // **** refactor using arr.proto.filter ****
     activityList.forEach(activity => {
