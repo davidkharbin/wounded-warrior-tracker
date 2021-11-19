@@ -7,7 +7,7 @@ const cors = require('cors');
 // const creds = require('../garmin.config.json')
 // const { GarminConnect } = require('garmin-connect');
 const Activities = require('../database/activities')
-const port = 3001;
+const port = 3000;
 
 // serve static files from dist dir
 app.use(express.static('client/dist'));

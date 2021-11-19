@@ -6,7 +6,7 @@ const cron = require('node-cron');
 const cors = require('cors');
 const creds = require('../garmin.config.json')
 const { GarminConnect } = require('garmin-connect');
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3000;
 
 // serve static files from dist dir
 app.use(express.static('client/dist'));
