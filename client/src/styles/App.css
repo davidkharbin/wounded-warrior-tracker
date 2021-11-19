@@ -1,4 +1,23 @@
-.App {
-	background-color: aquamarine;
-	padding: 25px;
+/* .App {
+  background-color: #f4f4f4;
+  border: lightgrey solid 1px;
+  padding: 15px;
+  text-align: center;
+  max-width: 800px;
+  margin: auto;
 }
+
+.App-header {
+  font-size: 1.5em;
+  margin-bottom: 0;
+}
+
+.App-totals {
+  width: auto;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+ul {
+  padding: 0;
+} */

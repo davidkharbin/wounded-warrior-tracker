@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const cron = require('node-cron');
 const queries = require('../database/schema.js');
 const db = require('../database/index.js')
 const cors = require('cors');
@@ -19,10 +20,10 @@ app.listen(port, () => {
 
 const main = () => {
   let totals = {
-    pushUps: 1000,
-    pullUps: 1000,
-    sitUps: 1000,
-    burpees: 1000
+    pushUps: 0,
+    pullUps: 0,
+    sitUps: 0,
+    burpees: 0
   }
   let workouts = [];
 
@@ -49,10 +50,10 @@ const main = () => {
     workouts.forEach(workout => {
       let summaries = workout.summary;
       summaries.forEach(summary => {
-        if (summary.subCategory === 'BURPEE') totals.burpees -= summary.reps;
-        if (summary.category === 'PULL_UP') totals.pullUps -= summary.reps;
-        if (summary.category === 'PUSH_UP') totals.pushUps -= summary.reps;
-        if (summary.category === 'SIT_UP') totals.sitUps -= summary.reps;
+        if (summary.subCategory === 'BURPEE') totals.burpees += summary.reps;
+        if (summary.category === 'PULL_UP') totals.pullUps += summary.reps;
+        if (summary.category === 'PUSH_UP') totals.pushUps += summary.reps;
+        if (summary.category === 'SIT_UP') totals.sitUps += summary.reps;
       })
     })
     console.log('=========TOTALS TO DATE  HAVE BEEN SET========');
@@ -65,11 +66,17 @@ const main = () => {
   return [totals, workouts];
 };
 
-let myValues = main();
+let garminData = main();
+
+// refresh data every 6 hours
+cron.schedule('0 */6 * * *', () => {
+  garminData = main();
+});
+
 
 app.get('/totals', (req, res) => {
   console.log('ran totals');
-  res.send(myValues);
+  res.send(garminData);
 });
 
 app.get('/', (req, res) => {

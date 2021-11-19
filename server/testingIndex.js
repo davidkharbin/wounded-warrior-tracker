@@ -1,4 +1,5 @@
 const express = require('express');
+const cron = require('node-cron');
 const app = express();
 // const queries = require('../database/schema.js');
 // const db = require('../database/index.js')
@@ -33,10 +34,10 @@ app.listen(port, () => {
 // Has to be run in an async function to be able to use the await keyword,
 const main = () => {
   let totals = {
-    pushUps: 1000,
-    pullUps: 1000,
-    sitUps: 1000,
-    burpees: 1000
+    pushUps: 0,
+    pullUps: 0,
+    sitUps: 0,
+    burpees: 0
   }
   let workouts = [];
   // Create a new Garmin Connect Client
@@ -64,10 +65,10 @@ const main = () => {
   workouts.forEach(workout => {
     let summaries = workout.summary;
     summaries.forEach(summary => {
-      if (summary.subCategory === 'BURPEE') totals.burpees -= summary.reps;
-      if (summary.category === 'PULL_UP') totals.pullUps -= summary.reps;
-      if (summary.category === 'PUSH_UP') totals.pushUps -= summary.reps;
-      if (summary.category === 'SIT_UP') totals.sitUps -= summary.reps;
+      if (summary.subCategory === 'BURPEE') totals.burpees += summary.reps;
+      if (summary.category === 'PULL_UP') totals.pullUps += summary.reps;
+      if (summary.category === 'PUSH_UP') totals.pushUps += summary.reps;
+      if (summary.category === 'SIT_UP') totals.sitUps += summary.reps;
     })
   })
   console.log('=========TOTAL TO DATE SET========');
@@ -77,11 +78,17 @@ const main = () => {
   console.log('burpees :>> ', totals.burpees);
   return [totals, workouts]
 };
+let garminData = main();
+
+// testing cron - live server will need to update data by re-scraping garmin connect web app
+cron.schedule('* * * * *', () => {
+  garminData = main();
+  console.log('running a task every minute');
+});
 
 app.get('/totals', (req, res) => {
   console.log('ran totals');
-  console.log('main>>>', main())
-  res.send(main())
+  res.send(garminData)
 })
 
 app.get('/', (req, res) => {
