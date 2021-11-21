@@ -15,8 +15,8 @@ const Workout = ({ workout, index }) => {
 
 		if (currentCategory === 'TOTAL_BODY') burpees += workout.summary[i].reps || 0;
 		if (currentCategory === 'PUSH_UP') pushUps += workout.summary[i].reps || 0;
-		if (currentCategory === 'SIT_UP') pullUps += workout.summary[i].reps || 0;
-		if (currentCategory === 'PULL_UP') sitUps += workout.summary[i].reps || 0;
+		if (currentCategory === 'SIT_UP') sitUps += workout.summary[i].reps || 0;
+		if (currentCategory === 'PULL_UP') pullUps += workout.summary[i].reps || 0;
 	}
 
 	return (

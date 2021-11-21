@@ -56,7 +56,7 @@ const main = () => {
         if (summary.category === 'SIT_UP') totals.sitUps += summary.reps;
       })
     })
-    console.log('=========TOTALS TO DATE  HAVE BEEN SET========');
+    console.log('=========        ONLINE INDEX         ========')
     console.log('pushUps :>> ', totals.pushUps);
     console.log('pullUps :>> ', totals.pullUps);
     console.log('sitUps  :>>  ', totals.sitUps);
