@@ -14,6 +14,8 @@ const App = () => {
 			.then((response) => {
 				setTotals(response.data[0]);
 				setWorkouts(response.data[1]
+					// === === === TO DO === === === //
+					// split the sort function out
 					.sort((firstWorkout, nextWorkout) => firstWorkout.id - nextWorkout.id));
 			});
 	};

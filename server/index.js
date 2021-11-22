@@ -35,6 +35,8 @@ const main = () => {
     //get last 50 activities
     let activityList = await GCClient.getActivities(0, 50);
     // filter Wounded-Warrior activities 
+
+          // === === === TO DO === === === //
     // **** refactor using arr.proto.filter ****
     activityList.forEach(activity => {
       if (activity.activityName.includes('Wounded')) {
@@ -62,7 +64,9 @@ const main = () => {
     console.log('sitUps  :>>  ', totals.sitUps);
     console.log('burpees :>> ', totals.burpees);
   })();
-
+  // send back the total reps of each exercise 
+  // send back the list of workouts
+  // send back 
   return [totals, workouts];
 };
 
