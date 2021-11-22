@@ -1,7 +1,8 @@
 import React from 'react';
 import '../styles/Workout.css';
+import ViewButton from './ViewButton.jsx';
 
-const Workout = ({ workout, index }) => {
+const Workout = ({ workout, index, id }) => {
 	let date = workout.date;
 	let name = workout.name;
 	let pushUps = 0;
@@ -9,6 +10,8 @@ const Workout = ({ workout, index }) => {
 	let pullUps = 0;
 	let burpees = 0;
 	let whiteBG = index % 2;
+	let cadetBlue = '#A2AEBB';
+	let gainsboro = '#DFE0E2';
 	
 	for (let i = 0; i < workout.summary.length; i++) {
 		let currentCategory = workout.summary[i].category;
@@ -20,9 +23,13 @@ const Workout = ({ workout, index }) => {
 	}
 
 	return (
-		<li className="Workout" style={{ backgroundColor: whiteBG ? 'white' : 'lightgrey' }}>
+		<li className="Workout" style={{ backgroundColor: whiteBG ? gainsboro : cadetBlue }}>
+			<span className="Workout-box">
+				<ViewButton
+				 key={id}
+				 id={id}/>
+			</span>
 			<span className="Workout-box">{date}</span>
-			<span className="Workout-box">{name}</span>
 			<span className="Workout-box">Burpees: {burpees}</span>
 			<span className="Workout-box">Pull-ups: {pullUps}</span>
 			<span className="Workout-box">Push-ups: {pushUps}</span>

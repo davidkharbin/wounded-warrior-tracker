@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Workout from './Workout.jsx';
 import axios from 'axios'
 import '../styles/App.css'
+import Exercise from './Burpees.jsx';
 
 const App = () => {
 	const [totals, setTotals] = useState('');
@@ -24,18 +25,22 @@ const App = () => {
 	return (
 		<div className="App">
 			<h1>Wounded Warrior Challenge 2021</h1>
-			<h3 className="App-header">Totals To Date: </h3>
-			<div className="App-totals">
-				<p>Burpees: {totals.burpees}</p>
-				<p>Pull-Ups: {totals.pullUps}</p>
-				<p>Push-Ups: {totals.pushUps}</p>
-				<p>Sit-Ups: {totals.sitUps}</p>
-			</div>
-			<h3 className="App-header">Journal: </h3>
+			<h3>Goal:</h3>
+			<p> <span className="strikethrough">830 burpees in November</span></p>
+					<p>1000 burpees + 1000 sit-ups + 1000 push-ups + 1000 pull-ups in November!</p>
+			<h3>Totals To Date: </h3>
+			<ul className="App-totals">
+				<Exercise name="Burpees"  total={totals.burpees} />
+				<Exercise name="Pull-Ups" total={totals.pullUps} />
+				<Exercise name="Push-Ups" total={totals.pushUps} />
+				<Exercise name="Sit-Ups"  total={totals.sitUps}  />
+			</ul>
+			<h3>Records: </h3>
 			<ul>
 				{workouts.map((workout, index) =>
 					<Workout
 						workout={workout}
+						id={workout.id}
 						key={workout.id}
 						index={index} />)}
 			</ul>
