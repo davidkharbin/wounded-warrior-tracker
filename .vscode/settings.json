@@ -2,7 +2,9 @@
 	"cSpell.words": [
 		"BURPEE",
 		"burpees",
+		"creds",
 		"gainsboro",
 		"strikethrough"
-	]
+	],
+	"material-icon-theme.activeIconPack": "react"
 }
