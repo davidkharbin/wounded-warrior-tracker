@@ -90,6 +90,7 @@ web_modules/
 .next
 out
 
+.vscode
 
 # Gatsby files
 .cache/
