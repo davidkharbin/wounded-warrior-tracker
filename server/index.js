@@ -4,13 +4,14 @@ const express = require('express');
 const app = express();
 const cron = require('node-cron');
 const cors = require('cors');
-const creds = require('../garmin.config.json')
+const path = require('path');
+const creds = require('../garmin.config.json');
 const { GarminConnect } = require('garmin-connect');
 const port = process.env.PORT || 3000;
 
 // express server w/cors
 // serve static files from dist dir
-app.use(express.static('client/dist'));
+app.use(express.static(path.join(__dirname, '..', 'client', 'dist')));
 app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
