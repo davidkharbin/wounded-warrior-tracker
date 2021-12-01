@@ -13,11 +13,9 @@ const App = () => {
 	};
 
 	const fetchTotals = () => {
-		console.log('fetchTotals ran');
 		axios.get(`https://cryptographic.ninja:8443/totals`, {
 		})
 			.then((response) => {
-				console.log(response.data)
 				setTotals(response.data[0]);
 				setWorkouts(response.data[1]
 				.sort(sortWorkoutsAsc));
