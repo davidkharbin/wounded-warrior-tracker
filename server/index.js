@@ -1,20 +1,33 @@
 // const queries = require('../database/schema.js');
 // const db = require('../database/index.js')
 const express = require('express');
+const https = require('https');
+const fs = require('fs');
+const privateKey = fs.readFileSync('/etc/letsencrypt/live/cryptographic.ninja/privkey.pem', 'utf8');
+const certificate = fs.readFileSync('/etc/letsencrypt/live/cryptographic.ninja/cert.pem', 'utf8');
+const ca = fs.readFileSync('/etc/letsencrypt/live/cryptographic.ninja/chain.pem', 'utf8'); 
+const credentials = {
+   key: privateKey,
+   cert: certificate,
+   ca: ca
+};
 const app = express();
 const cron = require('node-cron');
 const cors = require('cors');
 const creds = require('../garmin.config.json')
 const { GarminConnect } = require('garmin-connect');
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8443;
+const path = require('path');
 
-// express server w/cors
-// serve static files from dist dir
-app.use(express.static('client/dist'));
+
+
+app.use(express.static(path.join(__dirname, '..', 'client', 'dist')));
 app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
-app.listen(port, () => {
+
+const httpsServer = https.createServer(credentials, app);
+httpsServer.listen(port, () => {
   console.log(`Express server listening on port: ${port}`);
 });
 
