@@ -10,6 +10,8 @@ Scrapes your Wounded Warrior activities from Garmin Connect and aggregates the r
 
 ## Current setup is functional...
 
+https://cryptographic.ninja/
+
 Save your workout as "Wounded Warrior - Day ##"
 
 Confirm the exercises are correctly identified in Garmin-Connect
