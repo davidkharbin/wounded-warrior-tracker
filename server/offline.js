@@ -7,7 +7,7 @@ const cron = require('node-cron');
 const app = express();
 const cors = require('cors');
 const Activities = require('../database/activities')
-const port = 3000;
+const port = 3002;
 
 // serve static files from dist dir
 app.use(express.static('client/dist'));

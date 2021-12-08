@@ -20,6 +20,7 @@ const App = () => {
 				setWorkouts(response.data[1]
 					.sort(sortWorkoutsAsc));
 			});
+			console.log(workouts)
 	};
 
 	useEffect(() => {
