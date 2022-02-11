@@ -5,7 +5,6 @@ const fs = require('fs');
 const https = require('https');
 const cron = require('node-cron');
 const cors = require('cors');
-const path = require('path');
 const garminCreds = require('../garmin.config.json');
 const { GarminConnect } = require('garmin-connect');
 const path = require('path');
@@ -37,14 +36,14 @@ app.use(express.urlencoded({ extended: true }));
 
 
 const main = () => {
-  let workouts = [];
   let totals = {
     pushUps: 0,
     pullUps: 0,
     sitUps: 0,
     burpees: 0
-  }
+  };
   
+  let workouts = [];
   
   (async function getData() {
     // Create a new Garmin Connect Client and login
