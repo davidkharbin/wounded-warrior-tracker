@@ -34,7 +34,7 @@ const main = () => {
     await GCClient.login(creds.username, creds.password);
 
     // get last 50 activities
-    let activityList = await GCClient.getActivities(0, 50);
+    let activityList = await GCClient.getActivities(0, 100);
 
     // get the activities named Wounded-Warrior
     let activities = activityList.filter(activity => activity.activityName.includes('Wounded'));
