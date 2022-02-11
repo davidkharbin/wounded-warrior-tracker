@@ -20,13 +20,13 @@ app.listen(port, () => {
 });
 
 const main = () => {
+  let workouts = [];
   let totals = {
     pushUps: 0,
     pullUps: 0,
     sitUps: 0,
     burpees: 0
-  }
-  let workouts = [];
+  };
 
   (async function getData() {
     // Create a new Garmin Connect Client and login
