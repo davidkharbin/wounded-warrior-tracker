@@ -51,7 +51,7 @@ const main = () => {
     await GCClient.login(garminCreds.username, garminCreds.password);
     
     // get last 100 activities
-    let activityList = await GCClient.getActivities(0, 100);
+    let activityList = await GCClient.getActivities(0, 200);
     
     // get the activities named Wounded-Warrior
     let activities = activityList.filter(activity => activity.activityName.includes('Wounded'));
