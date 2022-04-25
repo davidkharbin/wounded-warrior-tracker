@@ -13,12 +13,12 @@ const App = () => {
 	};
 
 	const fetchTotals = () => {
-		axios.get(`/totals`, {
+		axios.get(`https://cryptographic.ninja:8443/totals`, {
 		})
 			.then((response) => {
 				setTotals(response.data[0]);
 				setWorkouts(response.data[1]
-					.sort(sortWorkoutsAsc));
+				.sort(sortWorkoutsAsc));
 			});
 			console.log(workouts)
 	};
@@ -31,7 +31,7 @@ const App = () => {
 		<div className="App">
 			<h1>Wounded Warrior Challenge 2021</h1>
 			<h3>Goal:</h3>
-			<p> <span className="strikethrough">830 burpees in November</span></p>
+			{/* <p> <span className="strikethrough">830 burpees in November</span></p> */}
 			<p>1000 burpees + 1000 sit-ups + 1000 push-ups + 1000 pull-ups in November!</p>
 			<h3>Totals To Date: </h3>
 			<ul className="App-totals">

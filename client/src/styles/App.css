@@ -25,7 +25,7 @@
 .strikethrough {
   text-decoration: line-through;
   text-decoration-color: orangered;
-  text-decoration-thickness: 2px;
+  text-decoration-thickness: 1px;
   padding: 0 10px 0 0;
 }
 

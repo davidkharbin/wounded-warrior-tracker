@@ -1,23 +1,39 @@
 // const queries = require('../database/schema.js');
 // const db = require('../database/index.js')
 const express = require('express');
-const app = express();
+const fs = require('fs');
+const https = require('https');
 const cron = require('node-cron');
 const cors = require('cors');
-const path = require('path');
-const creds = require('../garmin.config.json');
+const garminCreds = require('../garmin.config.json');
 const { GarminConnect } = require('garmin-connect');
-const port = process.env.PORT || 3000;
+const path = require('path');
 
-// express server w/cors
-// serve static files from dist dir
+
+// Certificates
+const privateKey = fs.readFileSync('/etc/letsencrypt/live/cryptographic.ninja/privkey.pem', 'utf8');
+const certificate = fs.readFileSync('/etc/letsencrypt/live/cryptographic.ninja/cert.pem', 'utf8');
+const ca = fs.readFileSync('/etc/letsencrypt/live/cryptographic.ninja/chain.pem', 'utf8'); 
+const credentials = {
+  key: privateKey,
+  cert: certificate,
+  ca: ca
+};
+
+// app server
+const app = express();
+const httpsServer = https.createServer(credentials, app);
+const port = process.env.PORT || 8443;
+httpsServer.listen(port, () => {
+  console.log(`Express server listening on port: ${port}`);
+});
+
 app.use(express.static(path.join(__dirname, '..', 'client', 'dist')));
 app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
-app.listen(port, () => {
-  console.log(`Express server listening on port: ${port}`);
-});
+
+
 
 const main = () => {
   let workouts = [];
@@ -27,27 +43,29 @@ const main = () => {
     sitUps: 0,
     burpees: 0
   };
-
+  
+  let workouts = [];
+  
   (async function getData() {
     // Create a new Garmin Connect Client and login
     let GCClient = new GarminConnect();
-    await GCClient.login(creds.username, creds.password);
-
-    // get last 50 activities
-    let activityList = await GCClient.getActivities(0, 100);
-
+    await GCClient.login(garminCreds.username, garminCreds.password);
+    
+    // get last 100 activities
+    let activityList = await GCClient.getActivities(0, 200);
+    
     // get the activities named Wounded-Warrior
     let activities = activityList.filter(activity => activity.activityName.includes('Wounded'));
     
     // get desired data from each activity
     activities.forEach(activity => {
-        let name = activity.activityName;
-        let date = activity.startTimeLocal.substring(0, 10)
-        let id = activity.activityId;
-        let summary = activity.summarizedExerciseSets;
-        workouts.push({ name: name, id: id, summary: summary, date: date })
+      let name = activity.activityName;
+      let date = activity.startTimeLocal.substring(0, 10)
+      let id = activity.activityId;
+      let summary = activity.summarizedExerciseSets;
+      workouts.push({ name: name, id: id, summary: summary, date: date })
     });
-
+    
     // get total reps of each exercise, for each workout
     workouts.forEach(workout => {
       let summaries = workout.summary;
@@ -58,11 +76,6 @@ const main = () => {
         if (summary.category === 'SIT_UP') totals.sitUps += summary.reps;
       })
     })
-    console.log('=========        ONLINE INDEX         ========')
-    console.log('pushUps :>> ', totals.pushUps);
-    console.log('pullUps :>> ', totals.pullUps);
-    console.log('sitUps  :>>  ', totals.sitUps);
-    console.log('burpees :>> ', totals.burpees);
   })();
   
   // total reps, list of workout data
