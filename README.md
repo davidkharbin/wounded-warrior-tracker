@@ -33,7 +33,8 @@ npm install
 ```
 npm run start
 ```
-
+##
+##
 startup for prod server on ex2, with Nninx and PM2 configured:
 1. `sudo systemctl start nginx`
 2. `sudo pm2 start wounded-warrior-tracker/server/index.js`
