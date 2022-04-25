@@ -40,6 +40,7 @@ app.use(express.urlencoded({ extended: true }));
 
 
 const main = () => {
+  let workouts = [];
   let totals = {
     pushUps: 0,
     pullUps: 0,
