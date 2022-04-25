@@ -6,7 +6,8 @@ Scrapes your Wounded Warrior activities from Garmin Connect and aggregates the r
 	- move main function from server index to it's own module
 	- break exercises and workouts out of App.jsx into their own list components
 	- persist data to the database
-:heavy_check_mark: - Set up security certificate and https on EC2
+
+:heavy_check_mark: Set up security certificate and https on EC2
 
 ## Current setup is functional...
 
