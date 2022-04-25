@@ -1,13 +1,17 @@
-// const queries = require('../database/schema.js');
-// const db = require('../database/index.js')
 const express = require('express');
-const fs = require('fs');
 const https = require('https');
-const cron = require('node-cron');
-const cors = require('cors');
-const garminCreds = require('../garmin.config.json');
-const { GarminConnect } = require('garmin-connect');
 const path = require('path');
+const fs = require('fs');
+const cors = require('cors');
+
+const queries = require('../database/schema.js');
+const dotenv = require('dotenv').config();
+const db = require('../database/index.js')
+
+const { GarminConnect } = require('garmin-connect');
+const garminCreds = require('../garmin.config.json');
+
+const cron = require('node-cron');
 
 
 // Certificates
