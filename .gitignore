@@ -16,6 +16,9 @@ client/dist/bundle.js
 # Garmin-Connect credentials
 garmin.config.json
 
+#database config
+database/db.config.js
+
 # Bundle
 client/dist/bundle.js
 

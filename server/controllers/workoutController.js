@@ -1,19 +1,25 @@
 const asyncHandler = require('express-async-handler');
+
+const Workout = require('../../database/models/workoutModel');
+
 // @desc get workouts
 // @route GET /workouts-2021
 // @access Private
 const getWorkouts = asyncHandler(async (req, res) => {
-	res.status(200).json({ message: 'Get workouts' });
+	let workouts = await Workout.find().sort({ activityId: 1 });
+	res.status(200).json(workouts);
 });
 
 // @desc Set workout
 // @route POST /workouts-2021
 // @access Private
 const setWorkout = asyncHandler(async (req, res) => {
-	if (!req.body.text) {
-		res.status(400)
-		throw new Error('Please submit string data')
-	}
+	console.log(req.body)
+	let workout = await Workout.create({
+		activityName: req.body.activityName,
+		activityId: req.body.activityId,
+		summarizedExerciseSets: req.body.summarizedExerciseSets
+	})
 	res.status(200).json({ message: 'Set workout' });
 });
 

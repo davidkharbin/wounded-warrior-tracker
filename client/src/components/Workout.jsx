@@ -3,8 +3,7 @@ import '../styles/Workout.css';
 import ViewButton from './ViewButton.jsx';
 
 const Workout = ({ workout, index, id }) => {
-	let date = workout.date;
-	let name = workout.name;
+	let date = workout.startTimeLocal.substring(0, 10);
 	let pushUps = 0;
 	let sitUps = 0;
 	let pullUps = 0;
@@ -13,13 +12,13 @@ const Workout = ({ workout, index, id }) => {
 	let cadetBlue = '#A2AEBB';
 	let gainsboro = '#DFE0E2';
 	
-	for (let i = 0; i < workout.summary.length; i++) {
-		let currentCategory = workout.summary[i].category;
+	for (let i = 0; i < workout.summarizedExerciseSets.length; i++) {
+		let currentCategory = workout.summarizedExerciseSets[i].category;
 
-		if (currentCategory === 'TOTAL_BODY') burpees += workout.summary[i].reps || 0;
-		if (currentCategory === 'PUSH_UP') pushUps += workout.summary[i].reps || 0;
-		if (currentCategory === 'SIT_UP') sitUps += workout.summary[i].reps || 0;
-		if (currentCategory === 'PULL_UP') pullUps += workout.summary[i].reps || 0;
+		if (currentCategory === 'TOTAL_BODY') burpees += workout.summarizedExerciseSets[i].reps || 0;
+		if (currentCategory === 'PUSH_UP') pushUps += workout.summarizedExerciseSets[i].reps || 0;
+		if (currentCategory === 'SIT_UP') sitUps += workout.summarizedExerciseSets[i].reps || 0;
+		if (currentCategory === 'PULL_UP') pullUps += workout.summarizedExerciseSets[i].reps || 0;
 	}
 
 	return (
