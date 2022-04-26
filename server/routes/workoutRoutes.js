@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const { getWorkouts, setWorkout, updateWorkouts, deleteWorkout } = require('../controllers/workoutController');
+const {
+	getWorkouts,
+	setWorkout,
+	updateWorkouts,
+	deleteWorkout } = require('../controllers/workoutController');
 
 router.get('/', getWorkouts);
 

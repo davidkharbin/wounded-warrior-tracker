@@ -1,4 +1,5 @@
 const express = require('express');
+const {errorHandler} = require('./middleware/errorMiddleware');
 const https = require('https');
 const path = require('path');
 const fs = require('fs');
@@ -36,11 +37,16 @@ const app = express();
 
 app.use(express.static(path.join(__dirname, '..', 'client', 'dist')));
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 app.use(cors());
-app.use(express.urlencoded({ extended: true }));
 
-app.use('/workouts-2021', require('./routes/workoutRoutes'))
+app.use('/workouts-2021', require('./routes/workoutRoutes'));
+app.use(errorHandler);
 
+
+////////////////////////////////////////////////////////////////////
+// REMOVE THIS FOR PROD SERVER (AND UNCOMMENT THE HTTPS CODE ABOVE!)
+////////////////////////////////////////////////////////////////////
 app.listen(3001, () => {
   console.log(`Web server running on: http://localhost:3001`);
 });
@@ -56,19 +62,19 @@ const main = () => {
     sitUps: 0,
     burpees: 0
   };
-  
-  
+
+
   (async function getData() {
     // Create a new Garmin Connect Client and login
     let GCClient = new GarminConnect();
     await GCClient.login(garminCreds.username, garminCreds.password);
-    
+
     // get last 100 activities
     let activityList = await GCClient.getActivities(0, 200);
-    
+
     // get the activities named Wounded-Warrior
     let activities = activityList.filter(activity => activity.activityName.includes('Wounded'));
-    
+
     // get desired data from each activity
     activities.forEach(activity => {
       let name = activity.activityName;
@@ -77,7 +83,7 @@ const main = () => {
       let summary = activity.summarizedExerciseSets;
       workouts.push({ name: name, id: id, summary: summary, date: date })
     });
-    
+
     // get total reps of each exercise, for each workout
     workouts.forEach(workout => {
       let summaries = workout.summary;
@@ -89,7 +95,7 @@ const main = () => {
       })
     })
   })();
-  
+
   // total reps, list of workout data
   return [totals, workouts];
 };
