@@ -2,9 +2,10 @@ const mongoose = require('mongoose');
 
 const workoutSchema = mongoose.Schema(
 	{
-		activityName: String,
 		activityId: {type: Number, unique: true},
-		summarizedExerciseSets: Array
+		activityName: String,
+		startTimeLocal: String,
+		summarizedExerciseSets: Array,
 	}
 	
 )

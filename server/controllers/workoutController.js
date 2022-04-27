@@ -1,5 +1,6 @@
 const asyncHandler = require('express-async-handler');
 
+
 const Workout = require('../../database/models/workoutModel');
 
 // @desc get workouts
@@ -16,8 +17,9 @@ const getWorkouts = asyncHandler(async (req, res) => {
 const setWorkout = asyncHandler(async (req, res) => {
 	console.log(req.body)
 	let workout = await Workout.create({
-		activityName: req.body.activityName,
 		activityId: req.body.activityId,
+		activityName: req.body.activityName,
+		startTimeLocal: req.body.startTimeLocal,
 		summarizedExerciseSets: req.body.summarizedExerciseSets
 	})
 	res.status(200).json({ message: 'Set workout' });

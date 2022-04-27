@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import Workout from './Workout.jsx';
 import axios from 'axios'
 import '../styles/App.css'
-import Exercise from './Exercise.jsx';
 import Totals from './Totals.jsx';
 
 const App = () => {
@@ -11,6 +10,7 @@ const App = () => {
 	const fetchWorkouts = () => {
 		axios.get(`http://localhost:3001/workouts-2021/`)
 			.then((response) => {
+				console.log(response.data)
 				setWorkouts(response.data);
 			});
 	};

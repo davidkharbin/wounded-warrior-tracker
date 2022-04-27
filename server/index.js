@@ -5,9 +5,8 @@ const https = require('https');
 const path = require('path');
 const fs = require('fs');
 const cors = require('cors');
-const getAllWorkouts = require('./')
 const dotenv = require('dotenv').config();
-
+const axios = require('axios');
 const { GarminConnect } = require('garmin-connect');
 const garminCreds = require('../garmin.config.json');
 
@@ -26,6 +25,7 @@ const cron = require('node-cron');
 
 // connect mongo
 connectDB();
+
 // app server
 const app = express();
 // const httpsServer = https.createServer(credentials, app);
@@ -55,60 +55,45 @@ app.listen(3001, () => {
 
 
 
-// const main = () => {
-//   let workouts = [];
-//   let totals = {
-//     pushUps: 0,
-//     pullUps: 0,
-//     sitUps: 0,
-//     burpees: 0
-//   };
+const fetchNewActivities = () => {
 
+  (async function getData() {
+    // Create a new Garmin Connect Client and login
+    let GCClient = new GarminConnect();
+    await GCClient.login(garminCreds.username, garminCreds.password);
 
-//   (async function getData() {
-//     // Create a new Garmin Connect Client and login
-//     let GCClient = new GarminConnect();
-//     await GCClient.login(garminCreds.username, garminCreds.password);
+    // get last 5 activities
+    let activityList = await GCClient.getActivities(0, 5);
 
-//     // get last 5 activities
-//     let activityList = await GCClient.getActivities(0, 5);
+    // get the activities named Wounded-Warrior
+    let activities = activityList.filter(activity => activity.activityName.includes('Wounded'));
 
-//     // get the activities named Wounded-Warrior
-//     let activities = activityList.filter(activity => activity.activityName.includes('Wounded'));
+    // get desired data from each activity
+    activities.forEach(activity => {
+      axios.post('http://localhost:3001/workouts-2021/', {
+        activityId: activity.activityId,
+        activityName: activity.activityName,
+        startTimeLocal: activity.startTimeLocal.substring(0, 10),
+        summarizedExerciseSets: activity.summarizedExerciseSets
+      })
+    });
 
-//     // get desired data from each activity
-//     activities.forEach(activity => {
-//       let name = activity.activityName;
-//       let date = activity.startTimeLocal.substring(0, 10)
-//       let id = activity.activityId;
-//       let summary = activity.summarizedExerciseSets;
-//       workouts.push({ name: name, id: id, summary: summary, date: date })
-//     });
-
-//     // get total reps of each exercise, for each workout
-//     workouts.forEach(workout => {
-//       let summaries = workout.summary;
-//       summaries.forEach(summary => {
-//         if (summary.subCategory === 'BURPEE') totals.burpees += summary.reps;
-//         if (summary.category === 'PULL_UP') totals.pullUps += summary.reps;
-//         if (summary.category === 'PUSH_UP') totals.pushUps += summary.reps;
-//         if (summary.category === 'SIT_UP') totals.sitUps += summary.reps;
-//       })
-//     })
-//   })();
-
-//   // total reps, list of workout data
-//   return [totals, workouts];
-// };
-
-// let garminData = main();
+    // get total reps of each exercise, for each workout
+    // workouts.forEach(workout => {
+    //   let summaries = workout.summary;
+    //   summaries.forEach(summary => {
+    //   })
+    // })
+  })();
+};
 
 // refresh data every 4 hours
-// cron.schedule('0 */4 * * *', () => {
-//   garminData = main();
-// });
+cron.schedule('0 */4 * * *', () => {
+  console.log('cron job executed')
+  fetchNewActivities();
+});
 
-
+// serve index.html
 app.get('/', (req, res) => {
   res.sendFile('index.html', { root: __dirname + '/../client/dist' }, (err) => {
     if (err) {
