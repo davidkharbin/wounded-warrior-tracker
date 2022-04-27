@@ -12,7 +12,7 @@ import ListItem from '@mui/material/ListItem';
 
 const WorkoutsList = ({ workouts }) => {
 	return (
-		<Box sx={{ width: '100%', maxWidth: 900, bgcolor: 'background.paper' }}>
+		<Box sx={{ width: '100%', maxWidth: 1000, bgcolor: 'background.paper' }}>
 			<List>
 					{workouts.map((workout, index) =>
 						<Workout

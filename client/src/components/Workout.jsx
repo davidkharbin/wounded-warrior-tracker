@@ -2,6 +2,8 @@ import React from 'react';
 import '../styles/Workout.css';
 import ViewButton from './ViewButton.jsx';
 import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import Divider from '@mui/material/Divider';
 
 const Workout = ({ workout, index, id }) => {
 	let date = workout.startTimeLocal.substring(0, 10);
@@ -9,7 +11,7 @@ const Workout = ({ workout, index, id }) => {
 	let sitUps = 0;
 	let pullUps = 0;
 	let burpees = 0;
-	
+
 	for (let i = 0; i < workout.summarizedExerciseSets.length; i++) {
 		let currentCategory = workout.summarizedExerciseSets[i].category;
 
@@ -20,18 +22,18 @@ const Workout = ({ workout, index, id }) => {
 	}
 
 	return (
-		<ListItem>
-			<span className="Workout-box">
+		<>
+			<ListItem >
 				<ViewButton
-				 key={id}
-				 id={id}/>
-			</span>
-			<span className="Workout-box">{date}</span>
-			<span className="Workout-box">Burpees: {burpees}</span>
-			<span className="Workout-box">Pull-ups: {pullUps}</span>
-			<span className="Workout-box">Push-ups: {pushUps}</span>
-			<span className="Workout-box">Sit-ups: {sitUps}</span>
-		</ListItem>
+					key={id}
+					id={id} />
+				<ListItemText 
+					primary={date}
+					secondary={`Push-Ups: ${pushUps} \n Pull-Ups: ${pullUps}`}
+					 />
+			</ListItem>
+			<Divider variant="middle" component="li" />
+		</>
 	)
 }
 
