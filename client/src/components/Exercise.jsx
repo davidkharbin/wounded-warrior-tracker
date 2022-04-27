@@ -2,10 +2,10 @@ import React from 'react'
 
 const Exercise = ({ name, total }) => {
 	return (
-		<li className="total">
+		<div className="total">
 			<span>{name}:</span>
 			<span>{total}</span>
-		</li>
+		</div>
 	)
 }
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import '../styles/Workout.css';
 import ViewButton from './ViewButton.jsx';
+import ListItem from '@mui/material/ListItem';
 
 const Workout = ({ workout, index, id }) => {
 	let date = workout.startTimeLocal.substring(0, 10);
@@ -8,9 +9,6 @@ const Workout = ({ workout, index, id }) => {
 	let sitUps = 0;
 	let pullUps = 0;
 	let burpees = 0;
-	let whiteBG = index % 2;
-	let cadetBlue = '#A2AEBB';
-	let gainsboro = '#DFE0E2';
 	
 	for (let i = 0; i < workout.summarizedExerciseSets.length; i++) {
 		let currentCategory = workout.summarizedExerciseSets[i].category;
@@ -22,7 +20,7 @@ const Workout = ({ workout, index, id }) => {
 	}
 
 	return (
-		<li className="Workout" style={{ backgroundColor: whiteBG ? gainsboro : cadetBlue }}>
+		<ListItem>
 			<span className="Workout-box">
 				<ViewButton
 				 key={id}
@@ -33,7 +31,7 @@ const Workout = ({ workout, index, id }) => {
 			<span className="Workout-box">Pull-ups: {pullUps}</span>
 			<span className="Workout-box">Push-ups: {pushUps}</span>
 			<span className="Workout-box">Sit-ups: {sitUps}</span>
-		</li>
+		</ListItem>
 	)
 }
 
