@@ -25,12 +25,6 @@ const App = () => {
 			<h3>Goal:</h3>
 			<p>1000 burpees + 1000 sit-ups + 1000 push-ups + 1000 pull-ups in November!</p>
 			<Totals workouts={workouts} />
-			{/* <ul className="App-totals">
-				<Exercise name="Burpees" total={totals.burpees} />
-				<Exercise name="Pull-Ups" total={totals.pullUps} />
-				<Exercise name="Push-Ups" total={totals.pushUps} />
-				<Exercise name="Sit-Ups" total={totals.sitUps} />
-			</ul> */}
 			<h3>Records: </h3>
 			<ul>
 				{workouts.map((workout, index) =>
