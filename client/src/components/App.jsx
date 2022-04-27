@@ -23,7 +23,7 @@ const App = () => {
 		<div className="App">
 			<h1>Wounded Warrior Challenge 2021</h1>
 			<h3>Goal:</h3>
-			<p>1000 burpees + 1000 sit-ups + 1000 push-ups + 1000 pull-ups in November!</p>
+			<p>1000 burpees, sit-ups, push-ups, and pull-ups in November!</p>
 			<Totals workouts={workouts} />
 			<h3>Records: </h3>
 			<ul>

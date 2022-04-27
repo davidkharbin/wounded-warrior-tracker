@@ -1,11 +1,11 @@
 const express = require('express');
+const dotenv = require('dotenv').config();
 const connectDB = require('../database/db.config');
 const {errorHandler} = require('./middleware/errorMiddleware');
 const https = require('https');
 const path = require('path');
 const fs = require('fs');
 const cors = require('cors');
-const dotenv = require('dotenv').config();
 const axios = require('axios');
 const { GarminConnect } = require('garmin-connect');
 const garminCreds = require('../garmin.config.json');
