@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import WorkoutsList from './WorkoutsList.jsx';
 import axios from 'axios'
-import '../styles/App.css'
 import TotalsList from './TotalsList.jsx';
 import { Container, Typography, Paper } from '@mui/material';
 import Heading from './Heading.jsx';

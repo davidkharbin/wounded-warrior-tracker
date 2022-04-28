@@ -1,28 +1,49 @@
-import React from 'react'
-import Workout from './Workout.jsx'
-import Box from '@mui/material/Box';
+import React, { useState, useEffect } from 'react';
+import Workout from './Workout.jsx';
 import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-// import ListItemButton from '@mui/material/ListItemButton';
-// import ListItemIcon from '@mui/material/ListItemIcon';
-// import ListItemText from '@mui/material/ListItemText';
-// import Divider from '@mui/material/Divider';
-// import InboxIcon from '@mui/icons-material/Inbox';
-// import DraftsIcon from '@mui/icons-material/Drafts';
+import { Button, Container, Stack } from '@mui/material';
 
 const WorkoutsList = ({ workouts }) => {
-	return (
-		<Box sx={{ width: '100%', maxWidth: 1000, bgcolor: 'background.paper' }}>
-			<List>
-					{workouts.map((workout, index) =>
-						<Workout
-							workout={workout}
-							id={workout.activityId}
-							key={workout.activityId}
-							index={index} />)}
-			</List>
-		</Box>
+	const [numberOfitemsShown, setNumberOfItemsToShown] = useState(3);
 
+	const workoutsMap = workouts.map((workout, index) => {
+		return (<Workout
+			workout={workout}
+			id={workout.activityId}
+			key={workout.activityId}
+			index={index} />)
+	}).slice(0, numberOfitemsShown);
+
+	function handleMoreClick() {
+		let newNumber = numberOfitemsShown + 3;
+		if (newNumber <= workouts.length + 3) {
+			setNumberOfItemsToShown(numberOfitemsShown + 3);
+		}
+	}
+
+	function handleLessClick() {
+		let newNumber = numberOfitemsShown - 3;
+		if (newNumber > 0) {
+			setNumberOfItemsToShown(numberOfitemsShown - 3);
+		}
+	}
+
+	return (
+		<Container maxWidth='sm'>
+			<List>
+				{workoutsMap}
+			</List>
+			<Stack spacing={2} direction="row">
+				<Button
+					variant="contained"
+					onClick={handleLessClick}>
+					Show Less</Button>
+				<Button
+					variant="contained"
+					onClick={handleMoreClick}>
+					Show More</Button>
+			</Stack>
+		</Container>
 	)
 }
 

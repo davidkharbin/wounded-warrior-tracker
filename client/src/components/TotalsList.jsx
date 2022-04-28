@@ -54,7 +54,7 @@ const Totals = ({ workouts }) => {
 					<ListItemIcon>
 						<ViewListIcon />
 					</ListItemIcon>
-					<ListItemText primary="Totals to date" />
+					<ListItemText primary={!open ? "Show totals to date" : "Hide totals to date"} />
 					{open ? <ExpandLess /> : <ExpandMore />}
 				</ListItemButton>
 				<Collapse in={open} timeout="auto" unmountOnExit>
