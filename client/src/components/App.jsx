@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import Workout from './Workout.jsx';
+import WorkoutsList from './WorkoutsList.jsx';
 import axios from 'axios'
-import '../styles/App.css'
-import Totals from './Totals.jsx';
+import TotalsList from './TotalsList.jsx';
+import { Container } from '@mui/material';
+import Heading from './Heading.jsx';
 
 const App = () => {
 	const [workouts, setWorkouts] = useState([]);
@@ -20,21 +21,11 @@ const App = () => {
 	}, []);
 
 	return (
-		<div className="App">
-			<h1>Wounded Warrior Challenge 2021</h1>
-			<h3>Goal:</h3>
-			<p>1000 burpees + 1000 sit-ups + 1000 push-ups + 1000 pull-ups in November!</p>
-			<Totals workouts={workouts} />
-			<h3>Records: </h3>
-			<ul>
-				{workouts.map((workout, index) =>
-					<Workout
-						workout={workout}
-						id={workout.activityId}
-						key={workout.activityId}
-						index={index} />)}
-			</ul>
-		</div>
+		<Container maxWidth='lg'>
+			<Heading />
+			<TotalsList workouts={workouts} />
+			<WorkoutsList workouts={workouts} />
+		</Container>
 	)
 }
 
