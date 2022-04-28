@@ -1,17 +1,17 @@
 import React from 'react';
-import '../styles/Workout.css';
 import ViewButton from './ViewButton.jsx';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import Divider from '@mui/material/Divider';
 
 const Workout = ({ workout, index, id }) => {
 	let date = workout.startTimeLocal.substring(0, 10);
+	let name = workout.activityName.substring(workout.activityName.indexOf('D'));
 	let pushUps = 0;
 	let sitUps = 0;
 	let pullUps = 0;
 	let burpees = 0;
-	let whiteBG = index % 2;
-	let cadetBlue = '#A2AEBB';
-	let gainsboro = '#DFE0E2';
-	
+
 	for (let i = 0; i < workout.summarizedExerciseSets.length; i++) {
 		let currentCategory = workout.summarizedExerciseSets[i].category;
 
@@ -22,18 +22,17 @@ const Workout = ({ workout, index, id }) => {
 	}
 
 	return (
-		<li className="Workout" style={{ backgroundColor: whiteBG ? gainsboro : cadetBlue }}>
-			<span className="Workout-box">
-				<ViewButton
-				 key={id}
-				 id={id}/>
-			</span>
-			<span className="Workout-box">{date}</span>
-			<span className="Workout-box">Burpees: {burpees}</span>
-			<span className="Workout-box">Pull-ups: {pullUps}</span>
-			<span className="Workout-box">Push-ups: {pushUps}</span>
-			<span className="Workout-box">Sit-ups: {sitUps}</span>
-		</li>
+		<ListItem divider >
+			<ViewButton
+				name={name}
+				key={id}
+				id={id} />
+			<ListItemText
+				inset
+				primary={`Burpees: ${burpees} | Pull-Ups: ${pullUps} | Push-Ups: ${pushUps} | Sit-Ups: ${sitUps} `}
+				secondary={date}
+			/>
+		</ListItem>
 	)
 }
 
