@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import WorkoutsList from './WorkoutsList.jsx';
 import axios from 'axios'
 import TotalsList from './TotalsList.jsx';
-import { Container, Typography, Paper } from '@mui/material';
+import { Container } from '@mui/material';
 import Heading from './Heading.jsx';
 
 const App = () => {

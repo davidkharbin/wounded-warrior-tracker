@@ -40,7 +40,7 @@ const Totals = ({ workouts }) => {
 	return (
 		<Container maxWidth='sm'>
 			<List
-				sx={{ width: '100%', maxWidth: 600, bgcolor: 'background.paper' }}
+				sx={{ maxWidth: 500, bgcolor: 'background.paper' }}
 				component="nav"
 				aria-labelledby="nested-list-subheader"
 				subheader={
@@ -54,7 +54,7 @@ const Totals = ({ workouts }) => {
 					<ListItemIcon>
 						<ViewListIcon />
 					</ListItemIcon>
-					<ListItemText primary={!open ? "Show totals to date" : "Hide totals to date"} />
+					<ListItemText align="center" primary={!open ? "See totals to date" : "Hide totals to date"} />
 					{open ? <ExpandLess /> : <ExpandMore />}
 				</ListItemButton>
 				<Collapse in={open} timeout="auto" unmountOnExit>

@@ -33,13 +33,11 @@ const WorkoutsList = ({ workouts }) => {
 			<List>
 				{workoutsMap}
 			</List>
-			<Stack spacing={2} direction="row">
+			<Stack spacing={5} direction="row" justifyContent="center">
 				<Button
-					variant="contained"
 					onClick={handleLessClick}>
 					Show Less</Button>
 				<Button
-					variant="contained"
 					onClick={handleMoreClick}>
 					Show More</Button>
 			</Stack>
