@@ -1,7 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv').config();
 const connectDB = require('../database/db.config');
-const {errorHandler} = require('./middleware/errorMiddleware');
+const { errorHandler } = require('./middleware/errorMiddleware');
 const https = require('https');
 const path = require('path');
 const fs = require('fs');
@@ -11,17 +11,6 @@ const { GarminConnect } = require('garmin-connect');
 const garminCreds = require('../garmin.config.json');
 
 const cron = require('node-cron');
-
-
-// Certificates
-// const privateKey = fs.readFileSync('/etc/letsencrypt/live/cryptographic.ninja/privkey.pem', 'utf8');
-// const certificate = fs.readFileSync('/etc/letsencrypt/live/cryptographic.ninja/cert.pem', 'utf8');
-// const ca = fs.readFileSync('/etc/letsencrypt/live/cryptographic.ninja/chain.pem', 'utf8'); 
-// const credentials = {
-//   key: privateKey,
-//   cert: certificate,
-//   ca: ca
-// };
 
 // connect mongo
 connectDB();
@@ -34,6 +23,15 @@ const app = express();
 //   console.log(`Express server listening on port: ${port}`);
 // });
 
+// Certificates
+// const privateKey = fs.readFileSync('/etc/letsencrypt/live/cryptographic.ninja/privkey.pem', 'utf8');
+// const certificate = fs.readFileSync('/etc/letsencrypt/live/cryptographic.ninja/cert.pem', 'utf8');
+// const ca = fs.readFileSync('/etc/letsencrypt/live/cryptographic.ninja/chain.pem', 'utf8'); 
+// const credentials = {
+//   key: privateKey,
+//   cert: certificate,
+//   ca: ca
+// };
 
 
 app.use(express.static(path.join(__dirname, '..', 'client', 'dist')));
@@ -45,9 +43,9 @@ app.use('/workouts-2021', require('./routes/workoutRoutes'));
 app.use(errorHandler);
 
 
-////////////////////////////////////////////////////////////////////
-// REMOVE THIS FOR PROD SERVER (AND UNCOMMENT THE HTTPS and SSL CODE ABOVE!)
-////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+// REMOVE THIS FOR PROD SERVER (AND UNCOMMENT THE HTTPS and SSL CODE ABOVE!) //
+///////////////////////////////////////////////////////////////////////////////
 app.listen(3001, () => {
   console.log(`Web server running on: http://localhost:3001`);
 });
@@ -55,37 +53,31 @@ app.listen(3001, () => {
 
 
 
-const fetchNewActivities = () => {
+async function fetchNewActivities() {
 
-  (async function getData() {
-    // Create a new Garmin Connect Client and login
-    let GCClient = new GarminConnect();
-    await GCClient.login(garminCreds.username, garminCreds.password);
+  // Create a new Garmin Connect Client and login
+  let GCClient = new GarminConnect();
+  await GCClient.login(garminCreds.username, garminCreds.password);
 
-    // get last 5 activities
-    let activityList = await GCClient.getActivities(0, 5);
+  // get last 5 activities
+  let activityList = await GCClient.getActivities(0, 5);
 
-    // get the activities named Wounded-Warrior
-    let activities = activityList.filter(activity => activity.activityName.includes('Wounded'));
+  // get the activities named Wounded-Warrior
+  let activities = activityList.filter(activity => activity.activityName.includes('Wounded'));
 
-    // get desired data from each activity
-    activities.forEach(activity => {
-      axios.post('http://localhost:3001/workouts-2021/', {
-        activityId: activity.activityId,
-        activityName: activity.activityName,
-        startTimeLocal: activity.startTimeLocal.substring(0, 10),
-        summarizedExerciseSets: activity.summarizedExerciseSets
-      })
-    });
-
-    // get total reps of each exercise, for each workout
-    // workouts.forEach(workout => {
-    //   let summaries = workout.summary;
-    //   summaries.forEach(summary => {
-    //   })
-    // })
-  })();
+  // add wounded-warrior activities to the database
+  activities.forEach(activity => {
+    // `https://cryptographic.ninja:${port}/workouts-2021`
+    axios.post('http://localhost:3001/workouts-2021/', {
+      activityId: activity.activityId,
+      activityName: activity.activityName,
+      startTimeLocal: activity.startTimeLocal.substring(0, 10),
+      summarizedExerciseSets: activity.summarizedExerciseSets
+    })
+  });
 };
+
+fetchNewActivities();
 
 // refresh data every 4 hours
 cron.schedule('0 */4 * * *', () => {
