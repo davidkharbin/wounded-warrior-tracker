@@ -41,8 +41,10 @@ startup for prod server on ex2, with Nninx and PM2 configured:
   - break exercises and workouts out of App.jsx into their own list components :heavy_check_mark:
   - persist data to the database :heavy_check_mark:
 
-Configure Nginx :heavy_check_mark: 
+Configure Nginx :heavy_check_mark:
+
 Set up security certificate and https on the prod server :heavy_check_mark:
+
 Clean up the frontend with MUI :heavy_check_mark:
 
 - Add support future challenges
