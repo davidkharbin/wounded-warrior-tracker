@@ -29,7 +29,7 @@ async function fetchNewActivities() {
 
   const now = new Date();
   const logString = date.format(now, 'MM/DD/YYYY hh:mm:ss A [MDT]');
-  console.log(`Fetched new activities @ ${logString}`);
+  console.log(`${logString}>>>: Fetched new activities`);
 };
 
 module.exports = fetchNewActivities;
