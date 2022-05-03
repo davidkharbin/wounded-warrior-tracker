@@ -1,15 +1,9 @@
 # wounded-warrior-tracker
-Scrapes your Wounded Warrior activities from Garmin Connect and aggregates the relevant exercise totals.
+Need to track your progress for the Wounded Warrior Challenge but neither Garmin-Connect's web or mobile app gives you the ability to aggregate specific exercises over a specified time? 
 
-## TO DO:
-- Separation of concerns 
-	- move main function from server index to it's own module
-	- break exercises and workouts out of App.jsx into their own list components
-	- persist data to the database
+Record them in a spreadsheet? LOL...NO.
 
-:heavy_check_mark: Set up security certificate and https on EC2
 
-## Current setup is functional...
 
 https://cryptographic.ninja/
 
@@ -38,3 +32,16 @@ npm run start
 startup for prod server on ex2, with Nninx and PM2 configured:
 1. `sudo systemctl start nginx`
 2. `sudo pm2 start wounded-warrior-tracker/server/index.js`
+
+##
+##
+# TO DO:
+- :heavy_check_mark: Separation of concerns 
+  - move main function from server index to it's own module
+  - break exercises and workouts out of App.jsx into their own list components
+  - persist data to the database
+
+:heavy_check_mark: Set up security certificate and https on EC2
+:heavy_check_mark: Use Material UI to clean up the frontend
+
+- Add support future challenges
