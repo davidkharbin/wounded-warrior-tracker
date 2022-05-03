@@ -38,7 +38,7 @@ app.listen(3001, () => {
 
 
 
-// fetchNewActivities();
+fetchNewActivities();
 
 // refresh data every 4 hours
 cron.schedule('0 */4 * * *', () => {
