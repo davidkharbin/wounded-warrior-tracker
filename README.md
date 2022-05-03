@@ -36,13 +36,12 @@ startup for prod server on ex2, with Nninx and PM2 configured:
 ##
 ##
 # TO DO:
-- :heavy_check_mark: Separation of concerns 
+:heavy_check_mark:  - Separation of concerns 
   - move main function from server index to it's own module
   - break exercises and workouts out of App.jsx into their own list components
   - persist data to the database
 
 :heavy_check_mark: Set up security certificate and https on EC2
-
 :heavy_check_mark: Use Material UI to clean up the frontend
 
 - Add support future challenges
