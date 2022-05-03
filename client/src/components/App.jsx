@@ -9,6 +9,7 @@ const App = () => {
 	const [workouts, setWorkouts] = useState([]);
 
 	const fetchWorkouts = () => {
+		// (prod) https://cryptographic.ninja:8443/workouts-2021
 		axios.get(`http://localhost:3001/workouts-2021/`)
 			.then((response) => {
 				console.log(response.data)
