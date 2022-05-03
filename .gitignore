@@ -16,7 +16,10 @@ client/dist/bundle.js
 # Garmin-Connect credentials
 garmin.config.json
 
-#database config
+# lets encrypt SSL config 
+server/ssl.config.js 
+
+# database config
 database/db.config.js
 
 # Bundle

@@ -1,7 +1,7 @@
 {
   "name": "wounded-warrior-tracker",
   "homepage": "https://www.ww-tracker-2021.davidkharbin.com",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Webpack Project",
   "main": "index.js",
   "scripts": {
@@ -49,7 +49,8 @@
     "cookie-session": "^1.4.0",
     "cors": "^2.8.5",
     "coveralls": "^3.1.1",
-    "dotenv": "^10.0.0",
+    "date-and-time": "^2.3.1",
+    "dotenv": "^16.0.0",
     "eslint": "^7.30.0",
     "express": "^4.17.1",
     "express-async-handler": "^1.2.0",
