@@ -45,12 +45,3 @@ cron.schedule('0 */4 * * *', () => {
   console.log('cron job executed')
   fetchNewActivities();
 });
-
-// serve index.html
-app.get('/', (req, res) => {
-  res.sendFile('index.html', { root: __dirname + '/../client/dist' }, (err) => {
-    if (err) {
-      res.status(400).send(err);
-    }
-  });
-});
