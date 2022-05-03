@@ -1,5 +1,5 @@
 const express = require('express');
-const dotenv = require('dotenv').config();
+// const dotenv = require('dotenv').config();
 const connectDB = require('../database/db.config');
 const https = require('https');
 const path = require('path');
@@ -38,7 +38,7 @@ app.listen(3001, () => {
 
 
 
-fetchNewActivities();
+// fetchNewActivities();
 
 // refresh data every 4 hours
 cron.schedule('0 */4 * * *', () => {
