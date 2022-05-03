@@ -1,7 +1,7 @@
 {
   "name": "wounded-warrior-tracker",
   "homepage": "https://www.ww-tracker-2021.davidkharbin.com",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Webpack Project",
   "main": "index.js",
   "scripts": {
