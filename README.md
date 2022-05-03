@@ -36,15 +36,16 @@ startup for prod server on ex2, with Nninx and PM2 configured:
 ##
 ##
 # TO DO:
-- Separation of concerns 
-  - move main function from server index to it's own module :heavy_check_mark:
-  - break exercises and workouts out of App.jsx into their own list components :heavy_check_mark:
-  - persist data to the database :heavy_check_mark:
+heavy_check_mark: Persist to a database
 
-Configure Nginx :heavy_check_mark:
+heavy_check_mark: Modularize the server index
 
-Set up security certificate and https on the prod server :heavy_check_mark:
+heavy_check_mark: Clean up frontend components
 
-Clean up the frontend with MUI :heavy_check_mark:
+heavy_check_mark: Configure Nginx
+
+heavy_check_mark: Set up security certificate and https on the prod server
+
+:heavy_check_mark: Clean up the frontend with MUI
 
 - Add support future challenges
