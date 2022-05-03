@@ -42,6 +42,7 @@ startup for prod server on ex2, with Nninx and PM2 configured:
   - persist data to the database
 
 :heavy_check_mark: Set up security certificate and https on EC2
+
 :heavy_check_mark: Use Material UI to clean up the frontend
 
 - Add support future challenges
