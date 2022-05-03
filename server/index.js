@@ -1,7 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv').config();
 const connectDB = require('../database/db.config');
-const { errorHandler } = require('./middleware/errorMiddleware');
 const https = require('https');
 const path = require('path');
 const fs = require('fs');
@@ -41,7 +40,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 app.use('/workouts-2021', require('./routes/workoutRoutes'));
-app.use(errorHandler);
 
 
 ///////////////////////////////////////////////////////////////////////////////
