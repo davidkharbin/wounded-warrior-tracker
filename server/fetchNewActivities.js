@@ -1,6 +1,7 @@
 const { GarminConnect } = require('garmin-connect');
 const garminCreds = require('../garmin.config.json');
 const date = require('date-and-time');
+const axios = require('axios');
 
 async function fetchNewActivities() {
 
