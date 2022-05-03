@@ -9,6 +9,7 @@ const cors = require('cors');
 const axios = require('axios');
 const { GarminConnect } = require('garmin-connect');
 const garminCreds = require('../garmin.config.json');
+const date = require('date-and-time');
 
 const cron = require('node-cron');
 
@@ -75,6 +76,10 @@ async function fetchNewActivities() {
       summarizedExerciseSets: activity.summarizedExerciseSets
     })
   });
+
+  const now = new Date();
+  const logString = date.format(now, 'MM/DD/YYYY hh:mm:ss A [MDT]');
+  console.log(`Fetched new activities @ ${logString}`);
 };
 
 fetchNewActivities();
